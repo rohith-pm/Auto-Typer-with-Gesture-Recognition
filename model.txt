@@ -1,0 +1,258 @@
+import tensorflow as tf
+import tflearn
+from tflearn.layers.conv import conv_2d,max_pool_2d
+from tflearn.layers.core import input_data,dropout,fully_connected
+from tflearn.layers.estimator import regression
+import numpy as np
+import cv2
+from sklearn.utils import shuffle
+
+loadedImages = []
+
+for i in range(1, 1001):
+    image = cv2.imread('finger_0/zero' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+	
+	
+for i in range(1, 1001):
+    image = cv2.imread('finger_1/one' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 1001):
+    image = cv2.imread('finger_2/two' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+    
+
+for i in range(1, 1001):
+    image = cv2.imread('finger_3/three' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+	
+	
+for i in range(1, 1001):
+    image = cv2.imread('finger_4/four' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+	
+	
+for i in range(1, 1001):
+    image = cv2.imread('finger_5/five' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+
+'''
+for i in range(1, 1001):
+    image = cv2.imread('finger_6/six' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 1001):
+    image = cv2.imread('finger_7/seven' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 1001):
+    image = cv2.imread('finger_8/eight' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))	
+	
+
+for i in range(1, 1001):
+    image = cv2.imread('space/space' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+	
+
+for i in range(1, 1001):
+    image = cv2.imread('two_numbers/two_num' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    loadedImages.append(gray_image.reshape(170, 60, 1))
+	'''
+	
+outputVectors = []
+for i in range(0, 1000):
+    outputVectors.append([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+	
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0])
+	
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0])
+'''
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0])
+
+for i in range(0, 1000):
+    outputVectors.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])	
+	'''
+testImages = []
+
+for i in range(1, 101):
+    image = cv2.imread('finger_0_test/zero' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+	
+	
+for i in range(1, 101):
+    image = cv2.imread('finger_1_test/one' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+	
+
+for i in range(1, 101):
+    image = cv2.imread('finger_2_test/two' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+    
+
+for i in range(1, 101):
+    image = cv2.imread('finger_3_test/three' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 101):
+    image = cv2.imread('finger_4_test/four' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+	
+
+for i in range(1, 101):
+    image = cv2.imread('finger_5_test/five' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+'''
+
+for i in range(1, 101):
+    image = cv2.imread('finger_6_test/six' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 101):
+    image = cv2.imread('finger_7_test/seven' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 101):
+    image = cv2.imread('finger_8_test/eight' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 101):
+    image = cv2.imread('space_test/space' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))
+
+
+for i in range(1, 101):
+    image = cv2.imread('two_numbers_test/two_num' + str(i) + '.png')
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    testImages.append(gray_image.reshape(170, 60, 1))	
+'''	
+	
+testLabels = []
+
+for i in range(0, 100):
+    testLabels.append([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    
+for i in range(0, 100):
+    testLabels.append([0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+for i in range(0, 100):
+    testLabels.append([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0])
+'''
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0])
+	
+for i in range(0, 100):
+    testLabels.append([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
+	
+'''
+	
+tf.reset_default_graph()
+convnet=input_data(shape=[None,170,60,1],name='input')
+
+convnet=conv_2d(convnet,32,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=conv_2d(convnet,64,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=conv_2d(convnet,128,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=conv_2d(convnet,256,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=conv_2d(convnet,256,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=conv_2d(convnet,128,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=conv_2d(convnet,64,2,activation='relu')
+convnet=max_pool_2d(convnet,2)
+
+convnet=fully_connected(convnet,600,activation='relu')
+convnet=dropout(convnet,0.75)
+
+convnet=fully_connected(convnet,6,activation='softmax')
+
+convnet=regression(convnet,optimizer='adam',learning_rate=0.001,loss='categorical_crossentropy',name='regression')
+
+model=tflearn.DNN(convnet,tensorboard_verbose=0)
+
+
+loadedImages, outputVectors = shuffle(loadedImages, outputVectors, random_state=0)
+
+# Train model
+model.fit(loadedImages, outputVectors, n_epoch=60,
+           validation_set = (testImages, testLabels),
+           snapshot_step=100, show_metric=True, run_id='convnet_coursera')
+
+model.save("Trainer/RohModel.tfl")

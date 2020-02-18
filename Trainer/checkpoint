@@ -1,0 +1,2 @@
+model_checkpoint_path: "R:\\opencv\\Gesture Recognition\\Trainer\\RohModel.tfl"
+all_model_checkpoint_paths: "R:\\opencv\\Gesture Recognition\\Trainer\\RohModel.tfl"
